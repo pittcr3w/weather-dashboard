@@ -8,7 +8,7 @@ const BASE_URL = "https://api.openweathermap.org/data/2.5";
  * @param {string} units - Units (metric or imperial)
  * @returns {Promise<Object>} Weather data
  */
-export async function getWeatherData(query, units = "metric") {
+export async function getWeatherData(query, units = "imperial") {
   // Determine if query is a city name or coordinates
   const queryParam =
     typeof query === "string" && !query.includes("lat=")
@@ -39,7 +39,7 @@ export async function getWeatherData(query, units = "metric") {
  * @param {string} units - Units (metric or imperial)
  * @returns {Promise<Object>} Forecast data
  */
-export async function getForecastData(lat, lon, units = "metric") {
+export async function getForecastData(lat, lon, units = "imperial") {
   const url = `${BASE_URL}/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=${units}`;
 
   try {

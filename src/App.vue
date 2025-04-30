@@ -1,6 +1,16 @@
 <template>
-  <div class="weather-dashboard">
-    <h1>Weather Dashboard</h1>
+  <div class="weather-dashboard" :class="{ 'dark-mode': isDarkMode }">
+    <div class="header-container">
+      <h1>Weather Dashboard</h1>
+      <button
+        @click="toggleDarkMode"
+        class="theme-toggle"
+        :title="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <span v-if="isDarkMode">☀️</span>
+        <span v-else>🌙</span>
+      </button>
+    </div>
     <LocationInput @add-location="addLocation" />
 
     <div class="weather-cards">
@@ -27,6 +37,7 @@ export default {
   data() {
     return {
       locations: JSON.parse(localStorage.getItem("weatherLocations") || "[]"),
+      isDarkMode: JSON.parse(localStorage.getItem("darkMode") || "false"),
     };
   },
   methods: {
@@ -54,26 +65,68 @@ export default {
     saveLocations() {
       localStorage.setItem("weatherLocations", JSON.stringify(this.locations));
     },
+    toggleDarkMode() {
+      this.isDarkMode = !this.isDarkMode;
+      localStorage.setItem("darkMode", JSON.stringify(this.isDarkMode));
+      document.documentElement.setAttribute(
+        "data-theme",
+        this.isDarkMode ? "dark" : "light"
+      );
+    },
+  },
+  mounted() {
+    // Apply theme on initial load
+    document.documentElement.setAttribute(
+      "data-theme",
+      this.isDarkMode ? "dark" : "light"
+    );
   },
 };
 </script>
 
 <style lang="scss">
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #f0f2f5;
-  margin: 0;
-  padding: 20px;
-}
+/* Remove the :root and [data-theme="dark"] declarations since they're now in styles.css */
 
 .weather-dashboard {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 20px;
+
+  .header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 30px;
+  }
 
   h1 {
     text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
+    color: var(--text-color);
+    margin-bottom: 0;
+  }
+
+  .theme-toggle {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: rgba(128, 128, 128, 0.2);
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .weather-cards {

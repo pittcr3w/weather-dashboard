@@ -71,6 +71,9 @@ export default {
     border: 1px solid #ddd;
     border-radius: 4px 0 0 4px;
     font-size: 16px;
+    border-color: var(--input-border);
+    color: var(--text-color);
+    background-color: var(--card-bg);
 
     &:focus {
       outline: none;
@@ -80,8 +83,8 @@ export default {
 
   .add-location-btn {
     padding: 12px 20px;
-    background-color: #3498db;
-    color: white;
+    background-color: var(--button-bg);
+    color: var(--button-text);
     border: none;
     border-radius: 0 4px 4px 0;
     cursor: pointer;
@@ -89,7 +92,7 @@ export default {
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: #2980b9;
+      background-color: var(--button-hover);
     }
   }
 }

@@ -134,7 +134,8 @@ export default {
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 16px;
-    color: #333;
+    color: var(--text-color); /* Changed from #333 to var(--text-color) */
+    font-weight: 600;
   }
 
   .loading,
@@ -142,6 +143,7 @@ export default {
     text-align: center;
     padding: 10px;
     font-size: 14px;
+    color: var(--text-color); /* Add this to ensure loading text is visible */
   }
 
   .error {
@@ -160,6 +162,7 @@ export default {
       .forecast-date {
         font-size: 14px;
         margin-bottom: 5px;
+        color: var(--text-color); /* Add this for better visibility */
       }
 
       .forecast-icon {
@@ -173,10 +176,12 @@ export default {
         .high {
           font-weight: bold;
           margin-right: 5px;
+          color: var(--text-color); /* Add this for better visibility */
         }
 
         .low {
-          color: #777;
+          color: var(--text-color); /* Changed from #777 */
+          opacity: 0.7; /* Added opacity for visual distinction */
         }
       }
     }

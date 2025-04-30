@@ -128,9 +128,10 @@ export default {
 
 <style lang="scss" scoped>
 .weather-card {
-  background-color: white;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  box-shadow: var(--card-shadow);
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   width: 350px;
   transition: all 0.3s ease;
@@ -140,7 +141,7 @@ export default {
   }
 
   .card-header {
-    background-color: #3498db;
+    background-color: var(--button-bg);
     color: white;
     padding: 15px;
     display: flex;
@@ -172,7 +173,7 @@ export default {
   .error {
     padding: 20px;
     text-align: center;
-    color: #555;
+    color: var(--text-color);
   }
 
   .error {
@@ -202,7 +203,7 @@ export default {
       .units-toggle {
         background: none;
         border: none;
-        color: #3498db;
+        color: var(--button-bg);
         padding: 5px 0;
         margin-top: 5px;
         cursor: pointer;
@@ -231,7 +232,8 @@ export default {
   }
 
   .weather-details {
-    background-color: #f9f9f9;
+    background-color: var(--card-bg);
+    border: 1px solid var(--input-border);
     border-radius: 4px;
     padding: 15px;
     margin-bottom: 20px;
@@ -246,7 +248,8 @@ export default {
       }
 
       .label {
-        color: #555;
+        color: var(--text-color);
+        opacity: 0.8;
       }
 
       .value {
