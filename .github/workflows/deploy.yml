@@ -16,22 +16,22 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18' # Use appropriate Node.js version
 
-      - name: Install Dependencies 🔧
+      - name: Update Dependencies 🔄
         run: |
-          # Make sure we install dev dependencies
-          npm ci
-          # Explicitly install Vue CLI if needed
-          npm install --save-dev @vue/cli-service
-
+          # Instead of npm ci, use npm install to update the lock file
+          npm install
+          
       - name: Build 🏗️
-        run: npm run build
+        run: |
+          npm run build
         env:
+          # Add any environment variables your build needs
           NODE_ENV: production
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist 
-          branch: gh-pages
+          folder: dist # The folder containing built app (default for Vue)
+          branch: gh-pages # The branch to deploy to
