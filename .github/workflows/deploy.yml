@@ -18,10 +18,17 @@ jobs:
         with:
           node-version: '18' # Use appropriate Node.js version
 
-      - name: Install and Build 🔧
+      - name: Install Dependencies 🔧
         run: |
+          # Make sure we install dev dependencies
           npm ci
-          npm run build
+          # Explicitly install Vue CLI if needed
+          npm install --save-dev @vue/cli-service
+
+      - name: Build 🏗️
+        run: |
+          # Use npx to run vue-cli-service
+          npx vue-cli-service build
         env:
           # Add any environment variables your build needs
           NODE_ENV: production
