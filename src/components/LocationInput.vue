@@ -4,7 +4,7 @@
       type="text"
       v-model="locationName"
       @keyup.enter="addLocation"
-      placeholder="Enter a city name (e.g., London, New York, Tokyo)"
+      placeholder="Enter city name (optional: City, ST for US cities)"
       class="location-input-field"
     />
     <button @click="addLocation" class="add-location-btn">Add Location</button>
@@ -31,13 +31,16 @@ export default {
       this.error = null;
 
       try {
+        const formattedLocation = this.formatLocationInput(this.locationName);
+
         // Fetch initial weather data to confirm the location exists
-        const weatherData = await getWeatherData(this.locationName);
+        const weatherData = await getWeatherData(formattedLocation);
 
         // If successful, emit the location to the parent
         this.$emit("add-location", {
           name: weatherData.name,
           country: weatherData.sys.country,
+          state: this.extractStateFromInput(this.locationName),
           lat: weatherData.coord.lat,
           lon: weatherData.coord.lon,
           current: weatherData,
@@ -52,6 +55,30 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+
+    formatLocationInput(input) {
+      // Check if input follows the "City, ST" format (city + 2-letter state code)
+      const cityStateRegex = /^(.+),\s*([A-Za-z]{2})$/;
+      const match = input.trim().match(cityStateRegex);
+
+      if (match) {
+        const city = match[1].trim();
+        const state = match[2].toUpperCase();
+        // Format as city,state,US for the OpenWeatherMap API
+        return `${city},${state},US`;
+      }
+
+      // Return the original input if it doesn't match the city,state pattern
+      return input.trim();
+    },
+
+    extractStateFromInput(input) {
+      // Extract state code if present
+      const cityStateRegex = /^(.+),\s*([A-Za-z]{2})$/;
+      const match = input.trim().match(cityStateRegex);
+
+      return match ? match[2].toUpperCase() : "";
     },
   },
 };
